@@ -81,7 +81,7 @@ static const MemMapEntry virt_memmap[] = {
     [VIRT_ACLINT_SSWI] =  {  0x2F00000,        0x4000 },
     [VIRT_PCIE_PIO] =     {  0x3000000,       0x10000 },
     [VIRT_PLATFORM_BUS] = {  0x4000000,     0x2000000 },
-    [VIRT_VIRT_FOO] =     {  0x8000000,         0x100 },
+    [VIRT_TEST_COUNTER] = {  0x8000000,         0x100 },
     [VIRT_PLIC] =         {  0xc000000, VIRT_PLIC_SIZE(VIRT_CPUS_MAX * 2) },
     [VIRT_APLIC_M] =      {  0xc000000, APLIC_SIZE(VIRT_CPUS_MAX) },
     [VIRT_APLIC_S] =      {  0xd000000, APLIC_SIZE(VIRT_CPUS_MAX) },
@@ -1002,27 +1002,27 @@ static void create_fdt_fw_cfg(RISCVVirtState *s, const MemMapEntry *memmap)
     g_free(nodename);
 }
 
-static void create_virt_foo_device(const RISCVVirtState *s, const MemMapEntry *memmap)
+static void create_test_counter_device(const RISCVVirtState *s, const MemMapEntry *memmap)
 {
-    hwaddr base = memmap[VIRT_VIRT_FOO].base;
-    hwaddr size = memmap[VIRT_VIRT_FOO].size;
+    hwaddr base = memmap[VIRT_TEST_COUNTER].base;
+    hwaddr size = memmap[VIRT_TEST_COUNTER].size;
     qemu_irq irq = 0; // do not connect sysbus irq
     
     char *nodename;
     MachineState *mc = MACHINE(s);
 
     /*
-     * virt-foo@0b000000 {
-     *         compatible = "virt-foo";
+     * test-counter@0b000000 {
+     *         compatible = "test-counter";
      *         reg = <0x0b000000 0x200>;
      * }
      */
 
-    sysbus_create_simple("virt-foo", base, irq);
+    sysbus_create_simple("test-counter", base, irq);
 
-    nodename = g_strdup_printf("/virt-foo@%" PRIx64, base);
+    nodename = g_strdup_printf("/test-counter@%" PRIx64, base);
     qemu_fdt_add_subnode(mc->fdt, nodename);
-    qemu_fdt_setprop_string(mc->fdt, nodename, "compatible", "virt-foo");
+    qemu_fdt_setprop_string(mc->fdt, nodename, "compatible", "test-counter");
     qemu_fdt_setprop_sized_cells(mc->fdt, nodename, "reg", 2, base, 2, size);
 
     g_free(nodename);
@@ -1076,7 +1076,7 @@ static void create_fdt(RISCVVirtState *s, const MemMapEntry *memmap,
 
     create_fdt_rtc(s, memmap, irq_mmio_phandle);
 
-    create_virt_foo_device(s, memmap);
+    create_test_counter_device(s, memmap);
 
     create_fdt_flash(s, memmap);
     create_fdt_fw_cfg(s, memmap);

@@ -79,13 +79,13 @@ enum {
     VIRT_PCIE_PIO,
     VIRT_PLATFORM_BUS,
     VIRT_PCIE_ECAM,
-    VIRT_VIRT_FOO,
+    VIRT_TEST_COUNTER,
 };
 
 enum {
     UART0_IRQ = 10,
     RTC_IRQ = 11,
-    VIRT_FOO_IRQ = 12,
+    TEST_COUNTER_IRQ = 12,
     VIRTIO_IRQ = 1, /* 1 to 8 */
     VIRTIO_COUNT = 8,
     PCIE_IRQ = 0x20, /* 32 to 35 */

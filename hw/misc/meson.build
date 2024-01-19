@@ -24,7 +24,7 @@ softmmu_ss.add(when: 'CONFIG_MOS6522', if_true: files('mos6522.c'))
 
 # virt devices
 softmmu_ss.add(when: 'CONFIG_VIRT_CTRL', if_true: files('virt_ctrl.c'))
-softmmu_ss.add(when: 'CONFIG_VIRT_FOO', if_true: files('virt_foo.c'))
+softmmu_ss.add(when: 'CONFIG_TEST_COUNTER', if_true: files('test_counter.c'))
 
 # RISC-V devices
 softmmu_ss.add(when: 'CONFIG_MCHP_PFSOC_DMC', if_true: files('mchp_pfsoc_dmc.c'))

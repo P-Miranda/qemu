@@ -174,7 +174,7 @@ config VIRT_CTRL
 config LASI
     bool
 
-config VIRT_FOO
+config TEST_COUNTER
     bool
 
 source macio/Kconfig
